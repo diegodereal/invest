@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienes Raíces | Diego De Real | Grupo Salo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Prata&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --accent: #d4c39d;
+            --accent-hover: #e5d8bc;
+            --accent-pale: rgba(212, 195, 157, 0.15);
+            --dark-bg: #0b0e14;
+            --deep-blue: #11151c;
+            --card-bg: #1a1f26;
+            --card-bg-mid: #151a21;
+            --text-light: #f8f9fa;
+            --text-muted: #9ca3af;
+            --text-dim: #5a6070;
+            --border: #2d343f;
+            --border-accent: rgba(212, 195, 157, 0.22);
+            --whatsapp-green: #25d366;
+            --urgency-red: #ff5f5f;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* ── HEADER BRAND ── */
+        .header-brand {
+            position: absolute;
+            top: 30px; right: 40px;
+            display: flex; align-items: center; gap: 15px;
+            z-index: 10;
+        }
+        .user-photo-link { display: flex; align-items: center; transition: transform 0.3s ease; text-decoration: none; }
+        .user-photo-link:hover { transform: scale(1.05); }
+        .user-photo { width: 55px; height: 55px; border-radius: 50%; object-fit: cover; opacity: 0.8; border: 1px solid var(--accent); transition: all 0.3s ease; }
+        .user-photo-link:hover .user-photo { opacity: 1; box-shadow: 0 0 15px rgba(212,195,157,0.4); }
+        .salo-link { display: flex; align-items: center; transition: opacity 0.3s ease; }
+        .salo-link:hover { opacity: 0.8; }
+        .salo-logo { height: 40px; width: auto; filter: brightness(1.2); }
+
+        /* ── WHATSAPP ── */
+        .whatsapp-float {
+            position: fixed; width: 60px; height: 60px; bottom: 40px; right: 40px;
+            background-color: var(--whatsapp-green); color: #FFF; border-radius: 50px;
+            text-align: center; font-size: 35px; box-shadow: 2px 2px 15px rgba(0,0,0,0.3);
+            z-index: 100; display: flex; align-items: center; justify-content: center;
+            text-decoration: none; transition: all 0.3s ease;
+            animation: pulse-green 2s infinite;
+        }
+        @keyframes pulse-green {
+            0%   { transform: scale(1);    box-shadow: 0 0 0 0 rgba(37,211,102,0.7); }
+            70%  { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(37,211,102,0); }
+            100% { transform: scale(1);    box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+        }
+
+        /* ── HERO ── */
+        .hero {
+            height: 100vh; position: relative;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; color: #fff; padding: 0 20px;
+            overflow: hidden; background-color: var(--deep-blue);
+        }
+        .video-background { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+        .video-background iframe {
+            width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+        }
+        .video-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(11,14,20,0.6), rgba(11,14,20,0.9));
+            z-index: 1;
+        }
+        .hero-content { position: relative; z-index: 2; max-width: 900px; }
+        .hero-text-box {
+            background: rgba(17,21,28,0.6); backdrop-filter: blur(12px);
+            padding: 40px; border-radius: 15px;
+            border: 1px solid rgba(212,195,157,0.15);
+        }
+        h1 { font-family: 'Prata', serif; font-size: clamp(2.3rem,5vw,4rem); margin: 0 0 15px; line-height: 1.1; letter-spacing: -1px; }
+        .highlight { color: var(--accent); }
+        .tagline { font-size: clamp(0.8rem,1.8vw,1rem); font-weight: 400; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 15px; display: block; color: var(--accent); }
+        .hero-description { font-size: clamp(0.9rem,2vw,1.1rem); font-weight: 300; line-height: 1.8; max-width: 650px; margin: 0 auto 30px; color: #d1d5db; }
+        .btn-gold {
+            display: inline-block; padding: 18px 36px; background: var(--accent); color: #0b0e14;
+            font-weight: 600; text-decoration: none; border-radius: 2px; text-transform: uppercase;
+            transition: all 0.3s ease; font-size: 0.75rem; letter-spacing: 2px; border: none;
+        }
+        .btn-gold:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
+
+        /* ── LOGO CAROUSEL ── */
+        .logo-carousel-section { padding: 40px 0; background: #080a0f; border-bottom: 1px solid var(--border); overflow: hidden; text-align: center; }
+        .logo-carousel { overflow: hidden; margin-bottom: 15px; white-space: nowrap; }
+        .logo-track { display: flex; width: max-content; animation: scroll 25s linear infinite; gap: 80px; align-items: center; padding: 0 40px; }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .logo-track img { height: 40px; filter: grayscale(1) brightness(2); opacity: 0.6; flex-shrink: 0; }
+        .partners-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 4px; color: var(--text-muted); font-weight: 400; }
+
+        /* ══════════════════════════════════════════
+           PORTFOLIO SECTION
+        ══════════════════════════════════════════ */
+        .portfolio-outer {
+            position: relative;
+            background: var(--deep-blue);
+            padding: 90px 0 100px;
+            overflow: hidden;
+        }
+        .portfolio-outer::before {
+            content: '';
+            position: absolute; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none; opacity: 0.4; z-index: 0;
+        }
+
+        .portfolio-page-header {
+            position: relative; z-index: 1;
+            text-align: center; padding: 0 24px 64px;
+        }
+        .portfolio-page-header::after {
+            content: ''; display: block; width: 50px; height: 1px;
+            background: var(--accent); margin: 24px auto 0; opacity: 0.6;
+        }
+        .portfolio-eyebrow {
+            font-family: 'Jost', sans-serif; font-size: 10px; font-weight: 400;
+            letter-spacing: 0.38em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
+        }
+        .portfolio-main-title {
+            font-family: 'Prata', serif; font-size: clamp(2rem,4vw,3.2rem);
+            font-weight: 400; line-height: 1.1; color: var(--text-light);
+        }
+        .portfolio-main-title em { font-style: italic; color: var(--accent); }
+        .portfolio-subtitle {
+            margin-top: 14px; font-size: 11px;
+            color: var(--text-muted); letter-spacing: 0.14em; text-transform: uppercase;
+        }
+
+        .portfolio-wrapper {
+            position: relative; z-index: 1;
+            max-width: 1300px; margin: 0 auto; padding: 0 32px;
+        }
+
+        .portfolio-section {
+            margin-bottom: 80px;
+            opacity: 0; transform: translateY(36px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .portfolio-section.visible { opacity: 1; transform: translateY(0); }
+
+        .section-header { display: flex; align-items: center; gap: 18px; margin-bottom: 34px; }
+        .section-number {
+            font-family: 'Cormorant Garamond', serif; font-size: 11px; color: var(--accent);
+            letter-spacing: 0.3em; font-weight: 400; white-space: nowrap;
+        }
+        .section-line { flex: 1; height: 1px; background: linear-gradient(to right, var(--border-accent), transparent); }
+        .section-title-label {
+            font-family: 'Cormorant Garamond', serif; font-size: clamp(1.4rem,2.5vw,2.1rem);
+            font-weight: 300; font-style: italic; letter-spacing: 0.04em;
+            color: var(--text-light); white-space: nowrap;
+        }
+
+        .property-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+        @media (max-width: 900px) { .property-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 560px) {
+            .property-grid { grid-template-columns: 1fr; }
+            .portfolio-wrapper { padding: 0 16px; }
+        }
+
+        /* ── 4-card grid for section 02 ── */
+        .property-grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+        }
+        @media (max-width: 1100px) { .property-grid-4 { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 560px)  { .property-grid-4 { grid-template-columns: 1fr; } }
+
+        .property-card {
+            position: relative; background: var(--card-bg-mid);
+            border: 1px solid var(--border-accent); overflow: hidden; cursor: pointer;
+            transition: border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+        .property-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 1px var(--accent-pale), 0 20px 55px rgba(0,0,0,0.6);
+        }
+
+        .card-image-wrap { position: relative; width: 100%; aspect-ratio: 4 / 3; overflow: hidden; }
+        .card-image-wrap img {
+            width: 100%; height: 100%; object-fit: cover; display: block;
+            transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.5s ease;
+            filter: brightness(0.82) saturate(0.8);
+        }
+        .property-card:hover .card-image-wrap img { transform: scale(1.055); filter: brightness(0.72) saturate(0.85); }
+        .card-image-wrap::after {
+            content: ''; position: absolute; inset: 0;
+            border: 2px solid transparent; transition: border-color 0.35s ease;
+            pointer-events: none; z-index: 3;
+        }
+        .property-card:hover .card-image-wrap::after { border-color: var(--accent); }
+
+        .banner {
+            position: absolute; z-index: 4; font-family: 'Jost', sans-serif;
+            font-size: 9.5px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase;
+            color: var(--text-light); background: rgba(11,14,20,0.62); backdrop-filter: blur(8px);
+            border: 1px solid rgba(212,195,157,0.3); padding: 5px 10px; white-space: nowrap; line-height: 1.4;
+        }
+        .banner.price {
+            color: var(--accent); font-weight: 500; font-size: 10px;
+            border-color: rgba(212,195,157,0.55); background: rgba(8,10,16,0.72);
+        }
+        .banner.urgency {
+            color: var(--urgency-red); border-color: rgba(255,95,95,0.4); background: rgba(8,10,16,0.72);
+        }
+        .banner.top-right    { top: 12px; right: 12px; }
+        .banner.top-left     { top: 12px; left: 12px; }
+        .banner.bottom-right { bottom: 12px; right: 12px; }
+        .banner.bottom-left  { bottom: 12px; left: 12px; }
+
+        .card-body { padding: 20px 22px 24px; }
+        .card-title {
+            font-family: 'Cormorant Garamond', serif; font-size: 1.22rem; font-weight: 400;
+            letter-spacing: 0.03em; color: var(--text-light); margin-bottom: 4px; line-height: 1.2;
+        }
+        .card-location {
+            font-size: 9px; text-transform: uppercase; letter-spacing: 0.2em;
+            color: var(--accent); margin-bottom: 14px; display: block;
+        }
+        .card-divider { width: 28px; height: 1px; background: var(--accent); margin-bottom: 14px; opacity: 0.6; transition: width 0.4s ease; }
+        .property-card:hover .card-divider { width: 48px; }
+
+        .card-features { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+        .card-features li {
+            font-size: 11px; color: var(--text-muted); letter-spacing: 0.05em;
+            padding-left: 14px; position: relative; line-height: 1.5;
+        }
+        .card-features li::before { content: '→'; position: absolute; left: 0; color: var(--accent); opacity: 0.75; font-size: 10px; }
+
+        /* ── FAQ ── */
+        .faq-section { padding: 80px 20px; background: var(--deep-blue); }
+        .faq-container { max-width: 800px; margin: 0 auto; }
+        .faq-item { margin-bottom: 12px; border: 1px solid var(--border); border-radius: 4px; background: var(--card-bg); overflow: hidden; }
+        .faq-question { padding: 22px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 400; color: var(--accent); font-family: 'Prata', serif; }
+        .faq-answer { padding: 0 22px; max-height: 0; overflow: hidden; transition: all 0.3s ease; color: var(--text-muted); font-size: 0.9rem; line-height: 1.7; }
+        .faq-item.active .faq-answer { padding: 0 22px 22px; max-height: 250px; }
+
+        /* ── CONTACT ── */
+        .contact-section { padding: 80px 20px; background: var(--dark-bg); }
+        .form-box { max-width: 550px; margin: 0 auto; background: var(--card-bg); padding: 45px; border-radius: 4px; border: 1px solid var(--border); }
+        .form-box h2 { text-align: center; font-family: 'Prata', serif; color: var(--accent); font-size: 2.2rem; margin-bottom: 10px; }
+        input, select { width: 100%; padding: 18px; background: #0d1117; border: 1px solid var(--border); color: white; border-radius: 2px; font-size: 0.9rem; font-family: 'Inter', sans-serif; margin-bottom: 15px; }
+
+        /* ── FOOTER ── */
+        footer { text-align: center; padding: 60px 20px; background: #080a0f; border-top: 1px solid var(--border); }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .footer-link { display: inline-block; text-decoration: none; transition: all 0.3s ease; padding: 5px 2px; position: relative; }
+        .footer-link::after { content: ''; position: absolute; width: 0; height: 1px; bottom: 0; left: 0; background-color: currentColor; transition: width 0.3s ease; }
+        .footer-link:hover::after { width: 100%; }
+        .footer-link.edgardo { color: var(--accent); font-weight: 400; font-family: 'Prata', serif; }
+        .footer-link.edgardo:hover { transform: translateY(-1px); }
+        .footer-link.salo { color: var(--text-muted); font-weight: 300; }
+
+        h2.section-title { text-align: center; font-family: 'Prata', serif; font-size: clamp(1.8rem,3.5vw,2.8rem); color: var(--accent); margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+    <!-- CAMBIO 1: Nuevo número y mensaje WhatsApp -->
+    <a href="https://wa.me/525519131596?text=Hola%20Diego!%20Me%20interesa%20recibir%20m%C3%A1s%20informaci%C3%B3n%20sobre%20compra%20de%20propiedades%20e%20inversi%C3%B3n" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- ══ HERO ══ -->
+    <header class="hero">
+        <div class="header-brand">
+            <a href="https://www.instagram.com/diegodereal_/" target="_blank" class="user-photo-link">
+                <img src="https://i.ibb.co/5hNQwgN1/Whats-App-Image-2026-05-08-at-10-51-39-a-m.jpg" alt="Diego de real" class="user-photo">
+            </a>
+            <a href="https://gruposalo.com" target="_blank" class="salo-link">
+                <img src="https://gruposalo.com/wp-content/uploads/2025/06/logo.png" alt="Grupo Salo Inmobiliario" class="salo-logo">
+            </a>
+        </div>
+
+        <div class="video-background">
+            <iframe src="https://www.youtube.com/embed/IGSIDUTqyo4?si=6-fz1Oq3uL87uN0H&autoplay=1&mute=1&loop=1&playlist=IGSIDUTqyo4&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&fs=0&playsinline=1&enablejsapi=1"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div class="video-overlay"></div>
+
+        <div class="hero-content">
+            <div class="hero-text-box">
+                <span class="tagline">Diego De Real | Inversión Inmobiliaria</span>
+                <h1>De Real <span class="highlight">Investments</span></h1>
+                <p class="hero-description">Tu socio estratégico, desde la búsqueda a la firma para propiedades premium.<br><br>Asesoría reservada solo para inversionistas serios.</p>
+                <a href="#contacto" class="btn-gold">Agendar una asesoría</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ══ LOGO CAROUSEL ══ -->
+    <div class="logo-carousel-section">
+        <div class="logo-carousel">
+            <div class="logo-track">
+                <img src="https://socasesores.com/oficinas/img/soc_blanco.png" alt="SOC">
+                <img src="https://bunkerpdc.com/wp-content/uploads/2024/04/Bunker-Logo_Naranja_Blanco.webp" alt="Bunker">
+                <img src="https://sedetus.qroo.gob.mx/wp-content/uploads/2024/05/cropped-SEDETUS.png" alt="Sedetus">
+                <img src="https://www.dintsa.mx/img/logo.svg?v=1711405477" alt="Dintsa">
+                <img src="https://www.murano.com.mx/static/images/utils/logo-dark.png" alt="Murano">
+                <img src="https://socasesores.com/oficinas/img/soc_blanco.png" alt="SOC">
+                <img src="https://bunkerpdc.com/wp-content/uploads/2024/04/Bunker-Logo_Naranja_Blanco.webp" alt="Bunker">
+                <img src="https://sedetus.qroo.gob.mx/wp-content/uploads/2024/05/cropped-SEDETUS.png" alt="Sedetus">
+                <img src="https://www.dintsa.mx/img/logo.svg?v=1711405477" alt="Dintsa">
+                <img src="https://www.murano.com.mx/static/images/utils/logo-dark.png" alt="Murano">
+            </div>
+        </div>
+        <div class="partners-label">nuestros socios comerciales</div>
+    </div>
+
+    <!-- ══ PORTFOLIO ══ -->
+    <div class="portfolio-outer">
+
+        <div class="portfolio-page-header">
+            <p class="portfolio-eyebrow">Exclusive Real Estate</p>
+            <h2 class="portfolio-main-title">Oportunidades <em>Auditadas</em></h2>
+            <p class="portfolio-subtitle">Investment Opportunities &amp; Lifestyle Collection</p>
+        </div>
+
+        <div class="portfolio-wrapper">
+
+            <!-- ═══ 01: Pre-Launch Deals ═══ -->
+            <div class="portfolio-section" data-section>
+                <div class="section-header">
+                    <span class="section-number">01</span>
+                    <div class="section-line"></div>
+                    <h3 class="section-title-label">Pre-Launch Deals</h3>
+                    <div class="section-line" style="background:linear-gradient(to left, var(--border-accent), transparent)"></div>
+                </div>
+                <div class="property-grid">
+
+                    <!-- Valle Aurora -->
+                    <div class="property-card">
+                        <div class="card-image-wrap">
+                            <img src="https://www.dintsa.mx/img/uploads/valle-aurora-cancun/valle-aurora-cancun-descripcion.jpg" alt="Valle Aurora">
+                            <span class="banner urgency top-right">Última torre disponible</span>
+                            <span class="banner price bottom-right">Desde $3.6 MDP</span>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">Valle Aurora</h4>
+                            <span class="card-location">Cancún</span>
+                            <div class="card-divider"></div>
+                            <ul class="card-features">
+                                <li>Preventa con entrega inmediata</li>
+                                <li>Tasa 0% de interés</li>
+                                <li>Altos márgenes de plusvalía</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Aurora Towers -->
+                    <div class="property-card">
+                        <div class="card-image-wrap">
+                            <img src="https://www.dintsa.mx/img/uploads/aurora-towers/galeria/g02-aurora-towers-frontal.jpg?v=1750202904" alt="Aurora Towers">
+                            <span class="banner urgency top-left">Precios amigos &amp; familia acaban pronto</span>
+                            <span class="banner price bottom-right">Desde $3.1 MDP</span>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">Aurora Towers</h4>
+                            <span class="card-location">Cancún</span>
+                            <div class="card-divider"></div>
+                            <ul class="card-features">
+                                <li>Lista de precios Versa Family</li>
+                                <li>Tasa 0% de interés</li>
+                                <li>Estilo de vida resort</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Lomas Aurora -->
+                    <div class="property-card">
+                        <div class="card-image-wrap">
+                            <img src="https://www.dintsa.mx/img/uploads/lomas-aurora/galeria/img-lomas-03.jpg?v=1740096315" alt="Lomas Aurora">
+                            <span class="banner top-left">Entrega inmediata</span>
+                            <span class="banner price bottom-right">Desde $3.4 MDP</span>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">Lomas Aurora</h4>
+                            <span class="card-location">Playa del Carmen</span>
+                            <div class="card-divider"></div>
+                            <ul class="card-features">
+                                <li>Departamentos y terrenos</li>
+                                <li>Preventa con tasa 0% de interés</li>
+                                <li>Estilo de vida naturaleza / selva</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ═══ 02: The Luxe Pre-Launch — 4 cards ═══ -->
+            <div class="portfolio-section" data-section>
+                <div class="section-header">
+                    <span class="section-number">02</span>
+                    <div class="section-line"></div>
+                    <h3 class="section-title-label">The Luxe Pre-Launch</h3>
+                    <div class="section-line" style="background:linear-gradient(to left, var(--border-accent), transparent)"></div>
+                </div>
+                <div class="property-grid-4">
+
+                    <!-- Bay View Grand -->
+                    <div class="property-card">
+                        <div class="card-image-wrap">
+                            <img src="https://bvgcancun.com.mx/img/Slide-1-2-1.png" alt="Bay View Grand">
+                            <span class="banner urgency top-right">Precios de lista por subir</span>
+                            <span class="banner price bottom-left">Desde $598,646 USD</span>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">Bay View Grand</h4>
+                            <span class="card-location">Zona Hotelera, Cancún</span>
+                            <div class="card-divider"></div>
+                            <ul class="card-features">
+                                <li>Preventa luxury con tasa 0%</li>
+                                <li>Las mejores vistas de Cancún</li>
+                                <li>Exclusividad AAA</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- The Residences by Grand Island -->
+                    <div class="property-card">
+                        <div class="card-image-wrap">
+                            <img src="https://theresidencesatgrandisland.com/img/banner-3.png" alt="The Residences by Grand Island">
+                            <span class="banner urgency top-left">El lujo se acaba pronto</span>
+                            <span class="banner price bottom-left">Desde $591,675 USD</span>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">The Residences</h4>
+                            <span class="card-location">by Grand Island, Cancún</span>
+                            <div class="card-divider"></div>
+                            <ul class="card-features">
+                                <li>Preventa exclusiva tasa 0%</li>
+                                <li>Vistas al océano y laguna</li>
+                                <li>Servicios de hotel 5 estrellas</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Náutica — CAMBIO 3: nueva tarjeta -->
+                    <div class="property-card">
+                        <div class="card-image-wrap">
+                            <img src="https://i.ibb.co/Y4n5mBVP/N-1.jpg" alt="Náutica"
+                                 onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(150deg,#0e1820 0%,#091018 50%,#050a0e 100%)'">
+                            <span class="banner top-left">Mejor precio de preventa</span>
+                            <span class="banner price bottom-right">Desde $342,857 USD</span>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">Náutica</h4>
+                            <span class="card-location">Cancún</span>
+                            <div class="card-divider"></div>
+                            <ul class="card-features">
+                                <li>Preventa exótica del Caribe</li>
+                                <li>Vistas a laguna y manglar</li>
+                                <li>Living luxury de estándar Diamond</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- SLS Ocean Beach -->
+                    <div class="property-card">
+                        <div class="card-image-wrap">
+                            <img src="https://i.ibb.co/gbnDw78j/IMG-0586.jpg" alt="SLS Ocean Beach"
+                                 onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(150deg,#141c26 0%,#0d141e 50%,#080c12 100%)'">
+                            <span class="banner top-left">Preventa exclusiva</span>
+                            <span class="banner price bottom-left">Desde $1.2 MDD</span>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">SLS Ocean Beach</h4>
+                            <span class="card-location">Cancún</span>
+                            <div class="card-divider"></div>
+                            <ul class="card-features">
+                                <li>Preventa exclusiva tasa 0%</li>
+                                <li>Vista al mar y frente de playa</li>
+                                <li>Amenidades de primer nivel</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ═══ 03: Designer Homes & Condos ═══ -->
+            <div class="portfolio-section" data-section>
+                <div class="section-header">
+                    <span class="section-number">03</span>
+                    <div class="section-line"></div>
+                    <h3 class="section-title-label">Designer Homes &amp; Condos</h3>
+                    <div class="section-line" style="background:linear-gradient(to left, var(--border-accent), transparent)"></div>
+                </div>
+                <div class="property-grid">
+
+                    <!-- Urban Villas -->
+                    <div class="property-card">
+                        <div class="card-image-wrap">
+                            <img src="https://i.ibb.co/HT4wjMfR/IMG-0587.jpg" alt="Urban Villas"
+                                 onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(155deg,#181a22 0%,#10121a 50%,#080a10 100%)'">
+                            <span class="banner price bottom-right">Desde $12 MDP</span>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">Urban Villas</h4>
+                            <span class="card-location">Cancún</span>
+                            <div class="card-divider"></div>
+                            <ul class="card-features">
+                                <li>Todo lo que necesitas para vivir</li>
+                                <li>Entrega inmediata</li>
+                                <li>Casas en doble lote</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Design Pre-sale Homes -->
+                    <div class="property-card">
+                        <div class="card-image-wrap">
+                            <img src="https://i.ibb.co/B2LWxrn5/IMG-0588.jpg" alt="Design Pre-sale Homes"
+                                 onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(140deg,#1a1822 0%,#120e1a 50%,#090810 100%)'">
+                            <span class="banner price bottom-right">Desde $8.9 MDP</span>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">Design Pre-sale Homes</h4>
+                            <span class="card-location">Cancún</span>
+                            <div class="card-divider"></div>
+                            <ul class="card-features">
+                                <li>Fraccionamiento privado con seguridad</li>
+                                <li>Preventa con tasa 0% de interés</li>
+                                <li>Ideal para familias</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Family Pre-sale Homes -->
+                    <div class="property-card">
+                        <div class="card-image-wrap">
+                            <img src="https://i.ibb.co/zC8gdCd/IMG-0589.jpg" alt="Family Pre-sale Homes"
+                                 onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(150deg,#181c12 0%,#10140a 50%,#080a05 100%)'">
+                            <span class="banner price bottom-right">Desde $4.4 MDP</span>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">Family Pre-sale Homes</h4>
+                            <span class="card-location">Cancún</span>
+                            <div class="card-divider"></div>
+                            <ul class="card-features">
+                                <li>Seguridad, tranquilidad y más</li>
+                                <li>Preventa con tasa 0% de interés</li>
+                                <li>Hogares orientados a la familia</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div><!-- /portfolio-wrapper -->
+    </div><!-- /portfolio-outer -->
+
+    <!-- ══ FAQ ══ -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <h2 class="section-title">Preguntas Frecuentes</h2>
+            <div class="faq-item">
+                <div class="faq-question">¿Cómo reduces el riesgo de inversión en preventas inmobiliarias? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">Por medio de una metodología de inversión donde auditamos legal, técnica y financieramente cada proyecto antes de ofrecértelo, evitando riesgos.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">¿Qué beneficios tiene la Tasa 0% de interés? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">Te permite financiar tu unidad directamente con el desarrollador durante el proceso de construcción, sin generar intereses bancarios adicionales, maximizando tu utilidad.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">¿Cuáles son las formas de pago? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">Nuestro esquema principal consiste en un 30% de enganche inicial, permitiéndote liquidar el porcentaje restante a través de cómodas mensualidades a tasa 0% de interés durante la construcción o contra entrega con capital propio o crédito bancario.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">¿Cómo aseguran la plusvalía de los proyectos? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">Seleccionamos ubicaciones estratégicas con infraestructura garantizada y precios de lista "Amigos y Familia" para asegurar el mayor margen de crecimiento.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ CONTACTO — CAMBIO 2: nuevo endpoint Formspree ══ -->
+    <section id="contacto" class="contact-section">
+        <div class="form-box">
+            <h2>Solicita una asesoría 1 a 1 conmigo</h2>
+            <form action="https://formspree.io/f/xpqbypya" method="POST">
+                <input type="text" name="Nombre" placeholder="Nombre Completo" required>
+                <input type="email" name="_replyto" placeholder="Correo Corporativo" required>
+                <input id="phone" type="tel" name="WhatsApp" required>
+                <select name="Rango_Inversion" required>
+                    <option value="" disabled selected>Rango de inversión de interés</option>
+                    <option value="1-2M">1 a 2 millones</option>
+                    <option value="2-3M">2 a 3 millones</option>
+                    <option value="3-4M">3 a 4 millones</option>
+                    <option value="4-5M">4 a 5 millones</option>
+                    <option value="5-6M">5 a 6 millones</option>
+                    <option value="6-7M">6 a 7 millones</option>
+                    <option value="7-8M">7 a 8 millones</option>
+                    <option value="8-9M">8 a 9 millones</option>
+                    <option value="9-10M">9 a 10 millones</option>
+                    <option value="10M+">10 millones o más</option>
+                </select>
+                <select name="Proyecto_de_Interes">
+                    <option value="" disabled selected>Proyecto de interés principal</option>
+                    <option value="Valle Aurora">Valle Aurora</option>
+                    <option value="Aurora Towers">Aurora Towers</option>
+                    <option value="Lomas Aurora">Lomas Aurora</option>
+                    <option value="Bay View Grand">Bay View Grand</option>
+                    <option value="The Residences">The Residences by Grand Island</option>
+                    <option value="Nautica">Náutica</option>
+                    <option value="SLS Ocean Beach">SLS Ocean Beach</option>
+                    <option value="Urban Villas">Urban Villas</option>
+                    <option value="Design Pre-sale Homes">Design Pre-sale Homes</option>
+                    <option value="Family Pre-sale Homes">Family Pre-sale Homes</option>
+                    <option value="Copropiedad">Me interesa recibir información sobre copropiedad</option>
+                </select>
+                <button type="submit" class="btn-gold" style="width:100%; cursor:pointer;">Enviar solicitud</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ══ FOOTER ══ -->
+    <footer>
+        <div class="container">
+            <p>
+                <a href="https://www.instagram.com/diegodereal_/" target="_blank" class="footer-link edgardo">Diego De Real</a>
+                <span style="color:var(--border); margin:0 10px;">|</span>
+                <a href="https://gruposalo.com" target="_blank" class="footer-link salo">De Real Investments</a>
+            </p>
+            <p style="letter-spacing:3px; font-size:0.65rem; text-transform:uppercase; margin-top:15px; color:var(--accent); font-weight:300;">Tu socio estratégico, desde la búsqueda a la firma para propiedades premium.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script>
+        const phoneInputField = document.querySelector("#phone");
+        window.intlTelInput(phoneInputField, {
+            initialCountry: "mx",
+            preferredCountries: ["mx", "us", "ca", "es"],
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+
+        document.querySelectorAll('.faq-question').forEach(item => {
+            item.addEventListener('click', () => { item.parentElement.classList.toggle('active'); });
+        });
+
+        const sections = document.querySelectorAll('[data-section]');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => entry.target.classList.add('visible'), i * 100);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.08 });
+        sections.forEach(s => observer.observe(s));
+
+        document.querySelectorAll('.property-card').forEach(card => {
+            card.addEventListener('touchstart', () => card.classList.add('touch-active'), { passive: true });
+            card.addEventListener('touchend',   () => setTimeout(() => card.classList.remove('touch-active'), 600), { passive: true });
+        });
+    </script>
+</body>
+</html>
